@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="UTF-8">
 	<title>Cat clicker remake</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="main.css" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-<body>
-	<div id="catlist">
-		<!--<button id='button1'>cat 1</button>-->
-		<!--<button id='button2'>cat 2</button>-->
-		<!--<button id='button3'>cat 3</button>-->
-		<!--<button id='button4'>cat 4</button>-->
-		<!--<button id='button5'>cat 5</button>-->
+
+<body class="clearfix">
+	<div class="container">
+		<div class="row">
+			<div class="col-xs-12" id="catlist">
+				<!--<button id='button1'>cat 1</button>-->
+				<!--<button id='button2'>cat 2</button>-->
+				<!--<button id='button3'>cat 3</button>-->
+				<!--<button id='button4'>cat 4</button>-->
+				<!--<button id='button5'>cat 5</button>-->
+			</div>
+		</div>
+		<div class="row">
+			<div id="catView">
+				<div class="col-xs-6">
+					<img class="img-responsive img-rounded" id="catImg"></img>
+				</div>
+				<div class="col-xs-4">
+					<div class="panel panel-default" id="catInfo">
+						<div class="panel-heading">
+							<h3 class="panel-title" id='catName'></h3>
+						</div>
+						<div class="panel-body">Clicked: <span id='counter'></span> times</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div id="catView">
-		
-	</div>
-	<!--<div class='cat' id='cat1'>-->
 	<!--	<span class='counter'>0</span> clicks-->
 	<!--	<br>-->
 	<!--	<img class='clicker' src="cat1.jpg" alt="">-->
@@ -42,4 +62,5 @@
 	<!--</div>-->
 </body>
 <script src="app.js"></script>
+
 </html>

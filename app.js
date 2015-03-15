@@ -38,6 +38,21 @@ var control = {
     },
     setCurrentCat: function (cat) {
         model.currentCat = cat;
+    },
+    increment: function () {
+        model.currentCat.count++;
+        catView.render()
+    },
+    currentCount: function () {
+        return model.currentCat.count;
+    },
+    init: function() {
+        model.currentCat = model.cats[0]
+        catListView.init();
+        catView.init();
+    },
+    getCatList: function () {
+        return model.cats;
     }
 }
 
@@ -52,63 +67,72 @@ var catListView = {
         this.render();
     },
     render: function () {
-        var catListLength = model.cats.length;
-        for (var i = 0; i < catListLength; i++) {
+        var cats = control.getCatList();
+        for (var i = 0; i < cats.length; i++) {
             var buttonElem = this.catListElem.appendChild(document.createElement('button'));
-            buttonElem.innerHTML = model.cats[i].name;
-            
+            var cat = cats[i];
+            buttonElem.innerHTML = cat.name;
+            buttonElem.className += "btn btn-primary"
             buttonElem.addEventListener('click', (function (cat) {
                 return function() {
                     control.setCurrentCat(cat);
-                    catView.init();
+                    catView.render();
                 }
-            })(model.cats[i]))
+            })(cat))
         }
     }
 };
-catListView.init();
 
 var catView = {
     init: function () {
         this.catViewElem = document.getElementById('catView');
+        this.catImgElem = document.getElementById('catImg');
+        this.catCounter = document.getElementById('counter');
+        this.catNameElem = document.getElementById('catName')
+        this.catImgElem.addEventListener('click', function () {
+            control.increment()
+        })
         
         this.render();
     },
     render: function () {
         var currentCat = control.getCurrentCat();
-        var catPic = this.catViewElem.appendChild(document.createElement('img'));
-        catPic.src = currentCat.img
+        
+        this.catImgElem.src = currentCat.img;
+        this.catNameElem.textContent = currentCat.name;
+        this.catCounter.textContent = currentCat.count;
     }
 }
 
-catView.init();
+control.init();
 
 
-var cats = document.getElementsByClassName('cat');
-var buttons = document.getElementsByTagName('button');
+// var cats = document.getElementsByClassName('cat');
+// var buttons = document.getElementsByTagName('button');
 
-var hideAllCats = function() {
-    for (var i = 0; i < cats.length; i++) {
-        cats[i].style.display = 'none';
-    }
-}
-var bindButtonToCat = function(idNumber) {
-    var button = document.getElementById('button' + idNumber);
-    var cat = document.getElementById('cat' + idNumber);
-    button.addEventListener('click', function() {
-        hideAllCats();
-        cat.style.display = 'block';
-    })
-}
-var bindCounterToCat = function(idNumber) {
-    var cat = document.getElementById('cat' + idNumber);
-    cat.addEventListener('click', function() {
-        var count = cat.childNodes[1].innerHTML;
-        count = parseInt(count) + 1;
-        cat.childNodes[1].innerHTML = count;
-    })
+// var hideAllCats = function() {
+//     for (var i = 0; i < cats.length; i++) {
+//         cats[i].style.display = 'none';
+//     }
+// }
+// var bindButtonToCat = function(idNumber) {
+//     var button = document.getElementById('button' + idNumber);
+//     var cat = document.getElementById('cat' + idNumber);
+//     button.addEventListener('click', function() {
+//         hideAllCats();
+//         cat.style.display = 'block';
+//     })
+// }
+// var bindCounterToCat = function(idNumber) {
+//     var cat = document.getElementById('cat' + idNumber);
+//     cat.addEventListener('click', function() {
+//         var count = cat.childNodes[1].innerHTML;
+//         count = parseInt(count) + 1;
+//         cat.childNodes[1].innerHTML = count;
+//     })
 
-}
+// }
+
 /*
 for (var i = 1; i <= buttons.length; i++) {
     bindButtonToCat(i)
