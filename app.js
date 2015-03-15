@@ -1,7 +1,10 @@
-var cats = document.getElementsByClassName('cat');
-var buttons = document.getElementsByTagName('button');
+
+// ====================================================
+// =============== MODEL ==============================
+// ====================================================
 
 var model = {
+    currentCat: null,
     cats: [{
         name: "Cat One",
         img: "cat1.jpg",
@@ -20,10 +23,69 @@ var model = {
         count: 0
     }, {
         name: "Cat Five",
-        img: "cat5sjpg",
+        img: "cat5.jpg",
         count: 0
     }]
 };
+
+// ====================================================
+// =============== CONTROL ============================
+// ====================================================
+
+var control = {
+    getCurrentCat: function () {
+        return model.currentCat;
+    },
+    setCurrentCat: function (cat) {
+        model.currentCat = cat;
+    }
+}
+
+// ====================================================
+// =============== VIEWS ==============================
+// ====================================================
+
+var catListView = {
+    init: function() {
+        this.catListElem = document.getElementById('catlist');
+        
+        this.render();
+    },
+    render: function () {
+        var catListLength = model.cats.length;
+        for (var i = 0; i < catListLength; i++) {
+            var buttonElem = this.catListElem.appendChild(document.createElement('button'));
+            buttonElem.innerHTML = model.cats[i].name;
+            
+            buttonElem.addEventListener('click', (function (cat) {
+                return function() {
+                    control.setCurrentCat(cat);
+                    catView.init();
+                }
+            })(model.cats[i]))
+        }
+    }
+};
+catListView.init();
+
+var catView = {
+    init: function () {
+        this.catViewElem = document.getElementById('catView');
+        
+        this.render();
+    },
+    render: function () {
+        var currentCat = control.getCurrentCat();
+        var catPic = this.catViewElem.appendChild(document.createElement('img'));
+        catPic.src = currentCat.img
+    }
+}
+
+catView.init();
+
+
+var cats = document.getElementsByClassName('cat');
+var buttons = document.getElementsByTagName('button');
 
 var hideAllCats = function() {
     for (var i = 0; i < cats.length; i++) {
@@ -47,11 +109,11 @@ var bindCounterToCat = function(idNumber) {
     })
 
 }
+/*
 for (var i = 1; i <= buttons.length; i++) {
     bindButtonToCat(i)
 }
 for (var i = 1; i <= cats.length; i++) {
     bindCounterToCat(i)
 }
-
-hideAllCats()
+*/
