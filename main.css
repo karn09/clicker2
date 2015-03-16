@@ -8,3 +8,8 @@ button {
     margin: 5px;
 }
 
+#adminPanel {
+    display: none;
+    margin: 5px;
+    
+}
